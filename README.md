@@ -99,10 +99,9 @@ Below are screenshots of the application’s interface:
 *Displays filtered cash flow records with a vertical sidebar.*
 
 ### Directory Management
-![Directory Page](22.png)
+![Directory Page](33.png)
 *Manage statuses, types, categories, and subcategories.*
 
+### Add Record
+![Directory Page](22.png)
 
-
-## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
