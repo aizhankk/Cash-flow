@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Delete {{ entity_type }}</h2>
+<p>Are you sure you want to delete the {{ entity_type.lower }} "{{ entity.name }}"?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a href="{% url 'directory' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

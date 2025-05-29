@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Cash Flow Records</h2>
+<form method="get" class="mb-4">
+    <div class="row">
+        <div class="col-md-3">
+            <label>Date From</label>
+            <input type="date" name="date_from" class="form-control" value="{{ request.GET.date_from }}">
+        </div>
+        <div class="col-md-3">
+            <label>Date To</label>
+            <input type="date" name="date_to" class="form-control" value="{{ request.GET.date_to }}">
+        </div>
+        <div class="col-md-2">
+            <label>Status</label>
+            <select name="status" class="form-control">
+                <option value="">All</option>
+                {% for status in statuses %}
+                <option value="{{ status.id }}" {% if request.GET.status == status.id|stringformat:"s" %}selected{% endif %}>{{ status.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label>Type</label>
+            <select name="type" class="form-control">
+                <option value="">All</option>
+                {% for type in types %}
+                <option value="{{ type.id }}" {% if request.GET.type == type.id|stringformat:"s" %}selected{% endif %}>{{ type.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label>Category</label>
+            <select name="category" class="form-control">
+                <option value="">All</option>
+                {% for category in categories %}
+                <option value="{{ category.id }}" {% if request.GET.category == category.id|stringformat:"s" %}selected{% endif %}>{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label>Subcategory</label>
+            <select name="subcategory" class="form-control">
+                <option value="">All</option>
+                {% for subcategory in subcategories %}
+                <option value="{{ subcategory.id }}" {% if request.GET.subcategory == subcategory.id|stringformat:"s" %}selected{% endif %}>{{ subcategory.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-2 mt-4">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Type</th>
+            <th>Category</th>
+            <th>Subcategory</th>
+            <th>Amount (₽)</th>
+            <th>Comment</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cashflow in cashflows %}
+        <tr>
+            <td>{{ cashflow.date }}</td>
+            <td>{{ cashflow.status.name }}</td>
+            <td>{{ cashflow.type.name }}</td>
+            <td>{{ cashflow.category.name }}</td>
+            <td>{{ cashflow.subcategory.name }}</td>
+            <td>{{ cashflow.amount }}</td>
+            <td>{{ cashflow.comment|default:"-" }}</td>
+            <td>
+                <a href="{% url 'cashflow_edit' cashflow.id %}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{% url 'cashflow_delete' cashflow.id %}" class="btn btn-sm btn-danger">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="8">No records found.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
